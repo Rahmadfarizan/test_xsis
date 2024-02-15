@@ -15,6 +15,9 @@ class HomeProvider extends ChangeNotifier {
 
    final List<Movie> _actionMovie = [];
   List<Movie> get actionMovie => _actionMovie;
+
+     final List<Movie> _searchMovie = [];
+  List<Movie> get searchMovie => _searchMovie;
   loadMovie(String title) async {
     try {
       _movie.clear();
@@ -70,6 +73,26 @@ class HomeProvider extends ChangeNotifier {
       log("LOAD MOVIE => $_actionMovie");
       notifyListeners();
       return _actionMovie;
+    } catch (e) {
+      return e;
+    }
+  }
+
+    loadSearchMovie(String title) async {
+    try {
+      _searchMovie.clear();
+      notifyListeners();
+      log("LOAD MOVIE START");
+      final responseData = await _apiService.getFilm(title);
+      if (responseData['Search'] != null) {
+        log("MOVIE => ${responseData['Search'].length}");
+        for (int i = 0; i < responseData['Search'].length; i++) {
+          _searchMovie.add(Movie.fromJson(responseData['Search'][i]));
+        }
+      }
+      log("LOAD MOVIE => $_searchMovie");
+      notifyListeners();
+      return _searchMovie;
     } catch (e) {
       return e;
     }

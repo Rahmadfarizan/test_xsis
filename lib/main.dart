@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_xsis/details_screen.dart';
 import 'package:test_xsis/home/presentation/provider/home_provider.dart';
+import 'package:test_xsis/search/presentation/screen/search_screen.dart';
 
 void main() async {
   runApp(MultiProvider(
@@ -66,7 +67,16 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           Container(
               padding: const EdgeInsets.only(right: 12),
-              child: const Icon(Icons.search)),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SearchScreen(),
+                      ),
+                    );
+                  },
+                  child: const Icon(Icons.search))),
         ],
       ),
       body: SingleChildScrollView(
